@@ -49,9 +49,9 @@ class simpleTemplate:
                 elif isinstance(i,list) and len(i) == 0 :
                     continue
                 else:
-                    print i
-                    f.write("%s\n" % i)
+                    f.write("%s" % i)
                     f.flush()
+
             f.close()
         except:
             print "can not open file" + file
@@ -62,7 +62,7 @@ class simpleTemplate:
             output: none , if no exists the path in template path then create it in output path  else continue
         """
         dir_name = os.path.dirname(tpl_file)
-        html_dir = dir_name.replace(self.cwd_path,'./').replace('views','html',1) if os.path.isabs(dir_name) else dir_name.replace('views','html',1)
+        html_dir = dir_name.replace(self.cwd_path,'./').replace('templates','html',1) if os.path.isabs(dir_name) else dir_name.replace('templates','html',1)
         if not  os.path.exists(html_dir):
             if os.makedirs(html_dir):
                 print 'cretae dir' + html_dir + 'success'
@@ -101,16 +101,17 @@ class simpleTemplate:
         for file in self.handle_tpl():
             if os.path.dirname(file).split('/')[-1] == 'include':
                 continue
-            fs = file.replace('views','html').replace('.tpl','.html')
+            fs = file.replace('templates','html').replace('.tpl','.html')
             html.append(self.compile(file,data))
             self.handle_dir(file)
             if os.path.isfile(fs) :
                 shutil.move(fs,fs+'-'+ str(int(time.time())))
                 open(fs, 'w').close() 
             self.handle_html(html,fs)
+            html = []
 
 
 if __name__ == '__main__':
 
-    s = simpleTemplate('views','html')
-    s.render({'title':'hello','content':'world'})
+    s = simpleTemplate('templates','html')
+    s.render({'title':'阿里DNS','content':'world'})
