@@ -114,4 +114,4 @@ class simpleTemplate:
 if __name__ == '__main__':
 
     s = simpleTemplate('templates','html')
-    s.render({'title':'阿里DNS','content':'world'})
+    s.render({'title':'hello','content':'world'})
